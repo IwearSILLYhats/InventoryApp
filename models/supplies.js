@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const SuppliesSchema = new Schema({
-    type: String,
-    price: Number,
-    stock: Number,
+    type: {type: String, required: true, minLength: 1},
+    price: {type: Number, min: 0},
+    stock: {type: Number, min: 0},
     info: String
 });
 
 SuppliesSchema.virtual("url").get(function () {
-    return `/${this._id}`;
+    return `/shop/supply/${this._id}`;
 })
 
 module.exports = mongoose.model("Supplies", SuppliesSchema);

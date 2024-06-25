@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
-    name: String,
+    name: {type: String, required: true},
     description: String
 });
 
 CategorySchema.virtual("url").get(function () {
-    return `this.${this._id}`;
+    return `/shop/category/${this._id}`;
 });
 
 module.exports = mongoose.model("Category", CategorySchema);
