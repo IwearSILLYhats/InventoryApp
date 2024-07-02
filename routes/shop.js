@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 // Require controller modules
-const category_controller = require("../controllers/category_controller");
-const critter_controller = require("../controllers/critter_controller");
-const supply_controller = require("../controllers/supply_controller");
+const category_controller = require("../controllers/categoryController");
+const critter_controller = require("../controllers/critterController");
+const supply_controller = require("../controllers/supplyController");
 
 /// CATEGORY ROUTES ///
 
@@ -86,3 +86,5 @@ router.get("/supply/:id", supply_controller.supply_detail);
 
 // GET for a list of all Supply items
 router.get("/supplies", supply_controller.supply_list);
+
+module.exports = router;

@@ -14,4 +14,4 @@ CritterSchema.virtual("url").get(function () {
     return `/shop/critter/${this._id}`;
 });
 
-module.exports = mongoose.Model("Critter", CritterSchema);
+module.exports = mongoose.model("Critter", CritterSchema);
