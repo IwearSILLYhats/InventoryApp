@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
     name: {type: String, required: true},
-    description: String
+    type: String,
+    info: String,
 });
 
 CategorySchema.virtual("url").get(function () {

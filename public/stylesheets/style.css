@@ -1,6 +1,12 @@
 body {
+  display: flex;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  gap: 1rem
+}
+
+.leftNav ul{
+  list-style: none;
 }
 
 a {

@@ -1,0 +1,9 @@
+extends layout 
+
+block content 
+    h1= title
+    h3= category.type
+    p= category.info
+
+    a(href=`${category.url}/update`)
+        p Update this category

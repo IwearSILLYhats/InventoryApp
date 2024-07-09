@@ -1,0 +1,11 @@
+extends layout 
+
+    block content 
+        h1= title
+
+        if critter_list.length
+            ul
+                each critter in critter_list 
+                    li 
+                        a(href=critter.url) #{critter.name}
+                        | In stock: #{critter.stock} - #{critter.price}
