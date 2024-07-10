@@ -7,10 +7,15 @@ block content
         input(type='text', placeholder='Crab, fish, xenomorph, ect.' name='name' required value=(undefined===category ? "" : category.name))
         label(for='type' required) Type:
         select(name='type' id='type' required)
-            option(value='critter') Critter
-            option(value='supply') Supply
+            if category
+                option(value='critter' selected=category.type === 'critter' ? true : false) Critter
+                option(value='supply' selected=category.type === 'supply' ? true : false) Supply
+            else
+                option(value='critter') Critter
+                option(value='supply') Supply
+
         label(for='info') Description:
-        textarea(name='info' placeholder='Tell us about the category you are trying to enter.')
+        textarea(name='info' placeholder='Tell us about the category you are trying to enter.') #{undefined===category ? "" : category.info}
         button(type="submit") Submit
     
     if errors

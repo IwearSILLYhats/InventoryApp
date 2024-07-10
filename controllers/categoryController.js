@@ -85,16 +85,76 @@ exports.category_delete_post = asyncHandler(async (req, res, next) => {
     // NOT IMPLEMENTED
 });
 
+// Display category update form on GET
 exports.category_update_get = asyncHandler(async (req, res, next) => {
-    // NOT IMPLEMENTED
+    const category = await Category.findById(req.params.id).exec();
+
+    // Category not found
+    if(category === null) {
+        res.redirect("/shop/categories");
+    }
+    else{
+        res.render("category_form", {
+            title: "Update a category",
+            category: category,
+        });
+    };
 });
 
-exports.category_update_post = asyncHandler(async (req, res, next) => {
-    // NOT IMPLEMENTED
-});
+exports.category_update_post = [
+    // Validation and sanitization
+    body('name')
+        .trim()
+        .escape()
+        .isLength({min:1})
+        .withMessage('Name must be specified')
+        .isAlphanumeric()
+        .withMessage('Name has non-alphanumeric characters'),
+    
+    body("type")
+        .trim()
+        .escape()
+        .isIn(['critter', 'supply'])
+        .withMessage('Please choose a category type.'),
+
+    body('info')
+        .trim()
+        .escape()
+        .optional({values: null}),
+
+    // Process request after sanitization
+    asyncHandler(async (req, res, next) => {
+        // Extract errors
+        const errors = validationResult(req);
+
+        // Create Category object with escaped and trimmed data
+        const category = new Category({
+            name: req.body.name,
+            type: req.body.type,
+            info: req.body.info,
+            _id: req.params.id // This is required, or a new ID will be assigned
+        })
+        if(!errors.isEmpty()) {
+            // Found errors, rerender with sanitized values/error messages
+            res.render("category_form", {
+                title: "Create a new category",
+                category: category,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+            // Data is valid
+
+            // Save category
+            const updatedCategory = await Category.findByIdAndUpdate(req.params.id, category, {});
+            // Redirect to new category record
+            res.redirect(updatedCategory.url);
+        }
+
+    }),
+];
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
-    // IN PROGRESS
     const category = await Category.findById(req.params.id).exec();
 
     if(category === null) {
