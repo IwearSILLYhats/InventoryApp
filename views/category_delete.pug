@@ -1,0 +1,28 @@
+extends layout 
+
+block content 
+    h1= title
+    h3= category.name
+    if critterList.length || supplyList.length
+        if critterList.length
+            h4 The following critters contain this category and must be edited or deleted before this category can be removed.
+            ul
+                for critter in critterList
+                    li
+                        a(href=critter.url) #{critter.name}
+        if supplyList.length
+            h4 The following supplies contain this category and must be edited or deleted before this category can be removed.
+            ul 
+                for supply in supplyList
+                    li
+                        a(href=supply.url) #{supply.name}
+    else
+        h3 Do you really want to delete this category?
+        form(action="", method="post") 
+            div
+                input(type="hidden" name="categoryid" value=category._id)
+                button(type="submit") Delete
+    if errors
+        ul 
+            for error in errors
+                li #{error}

@@ -67,7 +67,6 @@ exports.category_create_post = [
             return;
         } else {
             // Data is valid
-
             // Save category
             await category.save();
             // Redirect to new category record
@@ -77,12 +76,52 @@ exports.category_create_post = [
     }),
 ];
 
+// Display category delete form on GET
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
-    // NOT IMPLEMENTED
+    // Retrieves all related supplies and categories in parallel
+    const [category, allCritters, allSupplies] = await Promise.all([
+        Category.findById(req.params.id).exec(),
+        Critter.find({category: req.params.id}, "name").exec(),
+        Supply.find({category: req.params.id}, "name").exec()
+    ]);
+
+    // If category not found, redirect to category list
+    if (category === null){
+        res.redirect("/shop/categories");
+    }
+
+    res.render("category_delete", {
+        category: category,
+        critterList: allCritters,
+        supplyList: allSupplies,
+        title: "Delete a category",
+    })
 });
 
+// Handle category delete on POST
 exports.category_delete_post = asyncHandler(async (req, res, next) => {
-    // NOT IMPLEMENTED
+    // IN PROGRESS
+    // Retrieves all related supplies and categories in parallel
+    const [category, allCritters, allSupplies] = await Promise.all([
+        Category.findById(req.params.id).exec(),
+        Critter.find({category: req.params.id}, "name").exec(),
+        Supply.find({category: req.params.id}, "name").exec()
+    ]);
+
+    if(allCritters.length > 0 || allSupplies.length > 0){
+        // Category still has associated critter or supply
+        res.render("category_delete", {
+            category: category,
+            critterList: allCritters,
+            supplyList: allSupplies,
+            title: "Delete a category",
+        });
+        return;
+    }
+    else{
+        await Category.findByIdAndDelete(req.body.categoryid);
+        res.redirect("/shop/categories");
+    }
 });
 
 // Display category update form on GET
@@ -101,6 +140,7 @@ exports.category_update_get = asyncHandler(async (req, res, next) => {
     };
 });
 
+// Handle category update on POST
 exports.category_update_post = [
     // Validation and sanitization
     body('name')
@@ -154,6 +194,7 @@ exports.category_update_post = [
     }),
 ];
 
+// Displays detailed info for one category
 exports.category_detail = asyncHandler(async (req, res, next) => {
     const category = await Category.findById(req.params.id).exec();
 
