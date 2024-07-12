@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+    h1= title
+
+    form(method="post")
+        label(for="name") Name: 
+        input(type="text" placeholder="Habitat, food, decor, ect." name="name" required value=(undefined===supply ? "" : supply.name))
+        label(for="price") Price: $
+        input(type="number", name="price" placeholder="Price in dollars" value=(undefined===supply ? "" : supply.price))
+        label(for="price") Stock: 
+        input(type="number", name="stock" placeholder="Number in stock" value=(undefined===supply ? "" : supply.stock))
+        label(for='info') Description:
+        textarea(name='info' placeholder='Tell us about the supply you are trying to enter.') #{undefined===supply ? "" : supply.info}
+        label(for="category") Categories: 
+        div
+            for category in categories
+                div
+                    if category.checked
+                        input(type="checkbox", name="category" id=category._id value=category._id checked)
+                    else
+                        input(type="checkbox", name="category" id=category._id value=category._id)
+                    label(for=category._id) #{category.name}
+
+        button(type="submit") Submit
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

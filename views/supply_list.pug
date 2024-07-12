@@ -1,0 +1,12 @@
+extends layout 
+
+block content
+    h1= title
+
+    ul
+        for supply in supplyList
+            li 
+                a(href=supply.url) #{supply.name}
+
+    a(href="supply/create")
+        p Create a new supply

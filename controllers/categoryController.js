@@ -100,7 +100,6 @@ exports.category_delete_get = asyncHandler(async (req, res, next) => {
 
 // Handle category delete on POST
 exports.category_delete_post = asyncHandler(async (req, res, next) => {
-    // IN PROGRESS
     // Retrieves all related supplies and categories in parallel
     const [category, allCritters, allSupplies] = await Promise.all([
         Category.findById(req.params.id).exec(),
@@ -210,6 +209,7 @@ exports.category_detail = asyncHandler(async (req, res, next) => {
     })
 });
 
+// Display full category list
 exports.category_list = asyncHandler(async (req, res, next) => {
     const categoryList = await Category.find({}, "name type")
     .sort({name: 1})

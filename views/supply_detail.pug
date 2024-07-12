@@ -1,0 +1,18 @@
+extends layout 
+
+block content
+    h1= title
+    h3= supply.name
+    h5 $#{supply.price} - In Stock: #{supply.stock}
+    p #{supply.info}
+    if supply.category.length
+        h5 Categories:
+            ul
+                for category in supply.category
+                    li
+                        a(href=category.url) #{category.name}
+
+    p 
+        a(href=`${supply.url}/update`) Update this supply
+    p
+        a(href=`${supply.url}/delete`) Delete this supply

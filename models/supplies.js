@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const SuppliesSchema = new Schema({
     name: {type: String, required: true, minLength: 1},
-    category: [{type: Schema.Types.ObjectId, ref: "Categories"}],
+    category: [{type: Schema.Types.ObjectId, ref: "Category"}],
     price: {type: Number, min: 0},
     stock: {type: Number, min: 0},
     info: String
