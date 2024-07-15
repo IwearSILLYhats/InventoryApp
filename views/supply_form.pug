@@ -13,14 +13,14 @@ block content
         input(type="number", name="stock" placeholder="Number in stock" value=(undefined===supply ? "" : supply.stock))
         label(for='info') Description:
         textarea(name='info' placeholder='Tell us about the supply you are trying to enter.') #{undefined===supply ? "" : supply.info}
-        label(for="category") Categories: 
+        label(for="categories") Categories: 
         div
             for category in categories
                 div
                     if category.checked
-                        input(type="checkbox", name="category" id=category._id value=category._id checked)
+                        input(type="checkbox", name="categories" id=category._id value=category._id checked)
                     else
-                        input(type="checkbox", name="category" id=category._id value=category._id)
+                        input(type="checkbox", name="categories" id=category._id value=category._id)
                     label(for=category._id) #{category.name}
 
         button(type="submit") Submit

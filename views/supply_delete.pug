@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+    h1= title
+    h3= supply.name
+    if relatedCritters
+        if relatedCritters.length > 0
+            h3 The following critters need to be edited or removed before this supply can be deleted.
+            ul
+                for critter in relatedCritters
+                    a(href=critter.url) 
+                        li critter.name
+
+    else
+        p Are you sure you want to delete this category?
+        form(method="post") 
+            input(type="hidden" name="supplyId" value=supply._id)
+            button(type="submit") Delete
