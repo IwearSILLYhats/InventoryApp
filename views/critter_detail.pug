@@ -1,0 +1,26 @@
+extends layout 
+
+block content
+
+    h1= title
+    h3= critter.name
+    h5 #{critter.stock} - $#{critter.price}
+
+    p= critter.info
+
+    if critter.related.length
+        ul Related supplies:
+            each supply in critter.related
+                li
+                    a(href=supply.url) #{supply.name}
+    if critter.category.length
+        ul Categories: 
+            each category in critter.category
+                li 
+                    a(href=category.url) #{category.name}
+
+
+    a(href=`${critter.url}/update`) 
+        p Update this critter
+    a(href=`${critter.url}/delete`) 
+        p Delete this critter

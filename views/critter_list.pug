@@ -1,11 +1,14 @@
 extends layout 
 
-    block content 
-        h1= title
+block content 
+    h1= title
 
-        if critter_list.length
-            ul
-                each critter in critter_list 
-                    li 
-                        a(href=critter.url) #{critter.name}
-                        | In stock: #{critter.stock} - #{critter.price}
+    if critter_list.length
+        ul
+            each critter in critter_list 
+                li 
+                    a(href=critter.url) #{critter.name} 
+                    | In stock: #{critter.stock} - $#{critter.price}
+
+    a(href="/shop/critter/create")
+        p Create a new critter
